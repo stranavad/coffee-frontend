@@ -1,6 +1,6 @@
 import { SessionProvider } from "next-auth/react";
-import Menu from "../components/Menu";
-import ButtonBar from "../components/ButtonBar";
+// import Menu from "../components/Menu";
+// import ButtonBar from "../components/ButtonBar";
 import { Stack, Box } from "@mui/material";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
@@ -15,13 +15,13 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 					alignItems: "center",
 				}}
 			>
-				<Menu />
+				{/* <Menu /> */}
 				<Stack
 					alignItems="center"
 					sx={{ width: "100%", maxWidth: "lg", paddingTop: 2 }}
 				>
-					<ButtonBar />
-					<Component {...papgeProps} />
+					{/* <ButtonBar /> */}
+					<Component {...pageProps} />
 				</Stack>
 			</Box>
 		</SessionProvider>
