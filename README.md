@@ -1,2 +1,1 @@
 # Coffee Frontend
-## Next JS
