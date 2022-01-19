@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import Coffee from "./Coffee";
-import CoffeesContext from "../Context/CoffeesContext";
+import CoffeesContext from "../context/CoffeesContext";
 
 function CurrentCoffee() {
 	return (

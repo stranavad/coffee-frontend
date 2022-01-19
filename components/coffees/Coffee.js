@@ -1,5 +1,5 @@
 import Image from "next/image";
-import imageLoader from "../../imageLoader";
+//import imageLoader from "../../imageLoader";
 import { Card, Typography, CardContent, Box } from "@mui/material";
 import Ratings from "./Ratings";
 import Options from "./Options";
@@ -16,7 +16,7 @@ const Coffee = ({ coffee }) => {
 			<Image
 				width="400"
 				height="400"
-				loader={imageLoader}
+				// loader={imageLoader}
 				src={coffee.image}
 				alt={coffee.name}
 				unoptimized

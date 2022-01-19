@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import CoffeesContext from "../../../components/context/CoffeesContext";
 import Coffees from "../../../components/coffees/Coffees";
 import CurrentCoffee from "../../../components/coffees/CurrentCoffee";
+import AddRatingButton from "../../../components/AddRatingButton";
 
 // mui
 import { Box, CircularProgress, Typography, Stack } from "@mui/material";
@@ -42,9 +43,6 @@ const workspaces = () => {
 	}, [status, session]);
 
 	// coffee functions
-	let contextObject = useMemo(() => {
-		coffees, currentCoffee, setCurrent, deleteCoffee;
-	}, [coffees, currentCoffee]);
 	const deleteCoffee = () => {
 		console.log("deleting coffee");
 	};
@@ -52,6 +50,13 @@ const workspaces = () => {
 	const setCurrent = () => {
 		console.log("set current coffee");
 		e;
+	};
+
+	let contextObject = {
+		coffees,
+		currentCoffee,
+		setCurrent,
+		deleteCoffee,
 	};
 
 	// user status is yet to be determined
