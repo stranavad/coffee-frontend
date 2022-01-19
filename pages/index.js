@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSession, signIn } from "next-auth/react";
-import Link from 'next/link';
+import Link from "next/link";
 import axios from "axios";
 //components
-import Workspaces from '../components/workspace/Workspaces';
+import Workspaces from "../components/workspace/Workspaces";
 
 // material ui
 import { Box, CircularProgress, Typography } from "@mui/material";
@@ -12,12 +12,12 @@ export default function Home() {
 	const { data: session, status } = useSession();
 	const [workspaces, setWorkspaces] = useState([]);
 	//useEffect(() => console.log(status), [status])
-  useEffect(() => {
-    console.log(status);
+	useEffect(() => {
+		console.log(status);
 		if (status === "authenticated") {
 			axios
 				.get(`http://localhost:3001/user/workspace`, {
-					params: { user_id: 1235 },
+					params: { user_id: session.id },
 				})
 				.then((res) => {
 					setWorkspaces(res.data.workspaces);
@@ -25,16 +25,27 @@ export default function Home() {
 		}
 	}, [status]);
 
-	if (workspaces.length > 0) {
+	if (workspaces?.length > 0) {
 		return (
 			<Box sx={{ display: "flex", flexDirection: "column" }}>
-				<Workspaces workspaces={workspaces}/>
+				<Workspaces workspaces={workspaces} />
+				<Box>
+					<Link href="/add">
+						<Typography variant="h4" component="div">
+							Add workspace
+						</Typography>
+					</Link>
+				</Box>
 			</Box>
 		);
 	}
 	return (
-    <Box sx={{ display: "flex" }}>
-      {status === "unauthenticated" ? (<button onClick={signIn}>singin</button>) : ("")}
+		<Box sx={{ display: "flex" }}>
+			{status === "unauthenticated" ? (
+				<button onClick={signIn}>singin</button>
+			) : (
+				""
+			)}
 			<CircularProgress />
 		</Box>
 	);

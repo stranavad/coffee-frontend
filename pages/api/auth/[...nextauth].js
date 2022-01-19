@@ -12,12 +12,12 @@ export default NextAuth({
 	callbacks: {
 		session: async ({ session, token }) => {
 			session.id = token.sub;
-			const res = await axios.get(
+			const { data: {workspaces} } = await axios.get(
 				"http://localhost:3001/user/workspace",
 				{ params: { user_id: session.id } }
 			);
-			const workspaces = await res.data.workspaces;
-			session.workspaces = workspaces.map(workspace => workspace.id);
+			console.log(workspaces);
+			session.workspaces = workspaces?.map((workspace) => workspace.id);
 			return Promise.resolve(session);
 		},
 		signIn: async ({ user }) => {
