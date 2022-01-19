@@ -3,6 +3,9 @@ import { SessionProvider } from "next-auth/react";
 // import ButtonBar from "../components/ButtonBar";
 import { Stack, Box } from "@mui/material";
 
+//components
+import Menu from '../components/page/Menu';
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 	return (
 		<SessionProvider session={session}>
@@ -16,6 +19,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 				}}
 			>
 				{/* <Menu /> */}
+				<Menu/>
 				<Stack
 					alignItems="center"
 					sx={{ width: "100%", maxWidth: "lg", paddingTop: 2 }}
