@@ -1,0 +1,59 @@
+//nextjs, react
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import axios from "axios";
+//components
+import AddWorkspace from "../components/workspace/AddWorkspace";
+//mui
+import { Box, CircularProgress } from "@mui/material";
+
+const addWorkspace = () => {
+	const router = useRouter();
+	const { data: session, status } = useSession();
+
+	// methods
+	const add = (id, secret) => {
+		if (id && secret) {
+			axios
+				.post("http://localhost:3001/user/workspace", {
+					user_id: session.id,
+					workspace_id: id,
+					secret,
+				})
+				.then((res) => {
+					if (res.message === "ok") {
+						console.log("workspace added");
+						router.push(`/workspace/${id}`);
+					} else {
+						console.log("something is wrong");
+					}
+				});
+        } else {
+            console.log('not enough credentials');
+        }
+	};
+
+	// authentication and return
+	useEffect(() => {
+		if (status === "unauthenticated") {
+			router.push("/");
+		}
+	}, [status]);
+
+	if (status === "loading") {
+		return (
+			<Box>
+				<CircularProgress />
+			</Box>
+		);
+	}
+
+	return (
+		<Box>
+			<AddWorkspace add={add} />
+		</Box>
+	);
+};
+
+export default addWorkspace;
