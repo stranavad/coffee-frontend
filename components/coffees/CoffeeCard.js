@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import imageLoader from "../../imageLoader";
+// import imageLoader from "../../imageLoader";
 import Options from "./Options";
 
 const MyImage = React.forwardRef(({ coffee }, ref) => {
@@ -18,7 +18,7 @@ const MyImage = React.forwardRef(({ coffee }, ref) => {
 			height="320"
 			src={coffee.image}
 			alt={coffee.name}
-			loader={imageLoader}
+			// loader={imageLoader}
 			unoptimized
 		/>
 	);
