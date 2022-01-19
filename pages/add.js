@@ -14,23 +14,26 @@ const addWorkspace = () => {
 	const { data: session, status } = useSession();
 
 	// methods
-	const add = (id, secret) => {
+    const add = (id, secret) => {
+        console.log(id);
+        console.log(secret);
         if (id && secret) {
             console.log({ user_id: session.id, workspace_id: id, secret });
-			// axios
-			// 	.post("http://localhost:3001/user/workspace", {
-			// 		user_id: session.id,
-			// 		workspace_id: id,
-			// 		secret,
-			// 	})
-			// 	.then((res) => {
-			// 		if (res.message === "ok") {
-			// 			console.log("workspace added");
-			// 			router.push(`/workspace/${id}`);
-			// 		} else {
-			// 			console.log("something is wrong");
-			// 		}
-			// 	});
+			axios
+				.post("http://localhost:3001/user/workspace", {
+					user_id: session.id,
+					workspace_id: id,
+					secret,
+				})
+                .then(({ data }) => {
+                    console.log(data.message);
+					if (data.message === "ok") {
+						console.log("workspace added");
+						router.push(`/workspace/${id}`);
+					} else {
+						console.log("something is wrong");
+					}
+				});
         } else {
             console.log('not enough credentials');
         }
