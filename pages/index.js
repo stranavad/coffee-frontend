@@ -17,7 +17,7 @@ export default function Home() {
 		if (status === "authenticated") {
 			axios
 				.get(`http://localhost:3001/user/workspace`, {
-					params: { user_id: 1235 },
+					params: { user_id: session.id },
 				})
 				.then((res) => {
 					setWorkspaces(res.data.workspaces);
@@ -25,7 +25,7 @@ export default function Home() {
 		}
 	}, [status]);
 
-	if (workspaces.length > 0) {
+	if (workspaces?.length > 0) {
 		return (
 			<Box sx={{ display: "flex", flexDirection: "column" }}>
 				<Workspaces workspaces={workspaces} />
