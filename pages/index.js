@@ -31,7 +31,7 @@ export default function Home() {
 				<Workspaces workspaces={workspaces} />
 				<Box>
 					<Link href="/add">
-						<Typography variant="h4" component="div">
+						<Typography variant="h5" component="div">
 							Add workspace
 						</Typography>
 					</Link>

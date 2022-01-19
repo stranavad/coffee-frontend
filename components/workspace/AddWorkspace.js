@@ -41,10 +41,21 @@ const AddWorkspace = ({ add }) => {
 					value={workspaceSecret}
 					onChange={(e) => setWorkspaceSecret(e.target.value)}
 				/>
-				<Button type="submit" variant="contained">
-					Add Workspace
-				</Button>
+				{workspaceId !== 0 && workspaceSecret !== "" && (
+					<Button type="submit" variant="contained">
+						Add Workspace
+					</Button>
+				)}
 			</Stack>
+			{workspaceId === 0 || workspaceSecret === "" && (
+				<Typography
+					sx={{ marginTop: "50px" }}
+					variant="p"
+					component="div"
+				>
+					You first have to enter details to submit the form
+				</Typography>
+			)}
 		</Box>
 	);
 };
