@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSession, signIn } from "next-auth/react";
-
 import Link from 'next/link';
-
 import axios from "axios";
+//components
+import Workspaces from '../components/workspace/Workspaces';
 
 // material ui
 import { Box, CircularProgress, Typography } from "@mui/material";
@@ -28,13 +28,7 @@ export default function Home() {
 	if (workspaces.length > 0) {
 		return (
 			<Box sx={{ display: "flex", flexDirection: "column" }}>
-				{workspaces.map((workspace) => (
-					<Box key={workspace.id}>
-						<Link href={"/workspaces/" + workspace.id}>
-							<Typography>{workspace.name}</Typography>
-						</Link>
-					</Box>
-				))}
+				<Workspaces workspaces={workspaces}/>
 			</Box>
 		);
 	}
