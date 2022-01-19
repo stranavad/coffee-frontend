@@ -27,6 +27,7 @@ const addWorkspace = () => {
 				})
                 .then(({ data }) => {
                     console.log(data.message);
+                    
 					if (data.message === "ok") {
 						console.log("workspace added");
 						router.push(`/workspace/${id}`);

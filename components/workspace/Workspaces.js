@@ -7,7 +7,7 @@ import { Grid, Typography } from "@mui/material";
 const Workspaces = ({ workspaces }) => {
 	return (
 		<>
-			<Typography variant="h4">Workspaces</Typography>
+			<Typography variant="h4">Your workspaces</Typography>
 			<Grid container spacing={4} sx={{ paddingTop: 3 }}>
 				{workspaces.map((workspace) => (
 					<Grid item key={workspace.id}>
