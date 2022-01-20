@@ -25,28 +25,54 @@ export default function Home() {
 		}
 	}, [status]);
 
-	if (workspaces?.length > 0) {
-		return (
-			<Box sx={{ display: "flex", flexDirection: "column" }}>
-				<Workspaces workspaces={workspaces} />
-				<Box>
-					<Link href="/add">
-						<Typography variant="h5" component="div">
-							Add workspace
-						</Typography>
-					</Link>
+	// user is logged in
+	if (status === "authenticated") {
+		if (workspaces.length > 0) {
+			return (
+				<Box sx={{ display: "flex", flexDirection: "column" }}>
+					<Workspaces workspaces={workspaces} />
+					<Box>
+						<Link href="/add">
+							<Typography variant="h5" component="div">
+								Add workspace
+							</Typography>
+						</Link>
+					</Box>
 				</Box>
-			</Box>
-		);
+			);
+		} else {
+			return (
+				<Box sx={{ display: "flex", flexDirection: "column" }}>
+					<Typography>First, you need to add or create a workspace</Typography>
+					<Link href="/add">Add workspace</Link>
+					<Link href="/create">Create Workspace</Link>
+				</Box>
+			);
+		}
 	}
+
+	// the user state is yet to be determined
+	if (status === "loading") {
+		return (
+			<Box sx={{ display: "flex" }}>
+				<CircularProgress />
+			</Box>
+		);	
+	}
+
+	// users isn't logged in
+	if (status === "unauthenticated") {
+		return (
+			<Box sx={{ display: 'flex' }}>
+				<Typography>You need to first login to use this app</Typography>
+			</Box>
+		)
+	}
+	// some weird case
 	return (
-		<Box sx={{ display: "flex" }}>
-			{status === "unauthenticated" ? (
-				<button onClick={signIn}>singin</button>
-			) : (
-				""
-			)}
-			<CircularProgress />
+		<Box sx={{ display: 'flex' }}>
+			<Typography>There was some error that needs to be reported</Typography>
 		</Box>
-	);
+	)
+
 }
