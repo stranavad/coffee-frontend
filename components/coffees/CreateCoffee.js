@@ -1,22 +1,53 @@
 // nextjs, react
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 // components
 
 // mui
-import { Box, Stack, TextField, Button, Typography } from '@mui/material';
+import { Box, Stack, TextField, Button, Typography } from "@mui/material";
 
 const CreateCoffee = ({ create, id, workspace_id }) => {
+	const [name, setName] = useState("");
+	const [description, setDescription] = useState("");
+	const [image, setImage] = useState("");
+    const [url, setUrl] = useState("");
+
+    const [coffees, setCoffees] = useState([]); // only coffees names in array
+    
+	const [filled, setFilled] = useState(false); // for conditional rendering of the buttons
+	const [missing, setMissing] = useState(true);
+	useEffect(() => {
+		if (!name || !description || !image || !url) {
+			setMissing(true);
+		} else {
+			setMissing(false);
+		}
+		if (name && description && image && url) {
+			setFilled(true);
+		} else {
+			setFilled(false);
+		}
+    }, [name, description, image, url]);
+    
+    // checking if coffee name is unique (in this workspace)
     useEffect(() => {
-        axios
+        if (name in coffees) {
+            console.log('coffee with this name already exists');
+        }
+    }, [name])
+
+    // gettings coffees name for comparsion
+	useEffect(() => {
+		axios
 			.get("http://localhost:3001/coffees/names", {
 				params: { user_id: id, workspace_id },
 			})
 			.then((res) => {
 				setCoffees(res.data.coffees);
 			});
-    }, [])
-    return (
+    }, []);
+
+	return (
 		<Box
 			sx={{
 				width: 400,
@@ -31,7 +62,7 @@ const CreateCoffee = ({ create, id, workspace_id }) => {
 				spacing={4}
 				onSubmit={(e) => {
 					e.preventDefault();
-					add(workspaceId, workspaceSecret);
+					create(name, description, image, url);
 				}}
 			>
 				<Typography variant="h5" component="div">
@@ -40,44 +71,43 @@ const CreateCoffee = ({ create, id, workspace_id }) => {
 				<TextField
 					placeholder="Name"
 					value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    autofocus
-                    required
+					onChange={(e) => setName(e.target.value)}
+					autofocus
+					required
 				/>
 				<TextField
 					placeholder="Description"
 					value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
+					onChange={(e) => setDescription(e.target.value)}
+					required
 				/>
 				<TextField
 					placeholder="Image url"
-					value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
+					value={url}
+					onChange={(e) => setImage(e.target.value)}
+					required
 				/>
 				<TextField
 					placeholder="Coffee link"
-					value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
+					value={url}
+					onChange={(e) => setUrl(e.target.value)}
+					required
 				/>
-				{workspaceId !== 0 && workspaceSecret !== "" && (
+				{filled && (
 					<Button type="submit" variant="contained">
 						Add Workspace
 					</Button>
 				)}
 			</Stack>
-			{workspaceId === 0 ||
-				(workspaceSecret === "" && (
-					<Typography
-						sx={{ marginTop: "50px" }}
-						variant="p"
-						component="div"
-					>
-						You first have to enter details to submit the form
-					</Typography>
-				))}
+			{missing && (
+				<Typography
+					sx={{ marginTop: "50px" }}
+					variant="p"
+					component="div"
+				>
+					You first have to enter all the details to submit the form
+				</Typography>
+			)}
 		</Box>
 	);
-}
+};
