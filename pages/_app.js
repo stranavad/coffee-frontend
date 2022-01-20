@@ -10,7 +10,7 @@ import AlertBox from "../components/page/Alert";
 import Menu from "../components/page/Menu";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-	const [showAlert, setShowAlert] = useState(true);
+	const [showAlert, setShowAlert] = useState(false);
 	const [alertText, setAlertText] = useState("");
 	const [alertSeverity, setAlertSeverity] = useState("success");
 
