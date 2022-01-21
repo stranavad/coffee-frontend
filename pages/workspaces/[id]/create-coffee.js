@@ -1,5 +1,5 @@
 // nextjs, react
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -11,12 +11,22 @@ import { Box, Typography, Stack, CircularProgress } from '@mui/material';
 
 const createCoffee = () => {
     const router = useRouter();
+    const workspace_id = router.query.id;
     const { data: session, status } = useSession();
-    const [coffees, setCoffees] = useState([]);
-    const [protected, setProtected] = useState(false);
+    const [isProtected, setProtected] = useState(false);
 
-    const create = (coffee) => {
-        console.log(coffee);
+    const create = (name, description, image, url) => {
+        console.log({ name, description, image, url });
+        axios.post('http://localhost:3001/coffees', {
+            name, description, image, url, user_id: session.id, workspace_id
+        }).then((res) => {
+            if (res.data.message === "coffee created") {
+                router.push(`/workspaces/${workspace_id}`);
+            } else {
+                console.log('there was an error');
+                // render alert box
+            }
+        });
     }
 
     // authentication and data fetching
@@ -29,6 +39,7 @@ const createCoffee = () => {
                 router.push('/');
             }
         }
+        console.log(status);
     }, [status])
 
     if (status === "loading") {
@@ -41,11 +52,12 @@ const createCoffee = () => {
     if (status === "authenticated") {
         return (
             <Box sx={{ display: 'flex' }}>
-                <Typography>Create coffee</Typography>
-                <CreateCoffee create={coffee} id={session.id} workspace_id={workspace_id}/>
+                <CreateCoffee create={create} id={session.id} workspace_id={workspace_id}/>
             </Box>
         )
     }
+
+    return ('Well something is wrong here')
 }
 
 export default createCoffee;

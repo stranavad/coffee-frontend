@@ -1,5 +1,6 @@
 // nextjs, react
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 // components
 
@@ -10,10 +11,10 @@ const CreateCoffee = ({ create, id, workspace_id }) => {
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
 	const [image, setImage] = useState("");
-    const [url, setUrl] = useState("");
+	const [url, setUrl] = useState("");
 
-    const [coffees, setCoffees] = useState([]); // only coffees names in array
-    
+	const [coffees, setCoffees] = useState([]); // only coffees names in array
+
 	const [filled, setFilled] = useState(false); // for conditional rendering of the buttons
 	const [missing, setMissing] = useState(true);
 	useEffect(() => {
@@ -27,25 +28,26 @@ const CreateCoffee = ({ create, id, workspace_id }) => {
 		} else {
 			setFilled(false);
 		}
-    }, [name, description, image, url]);
-    
-    // checking if coffee name is unique (in this workspace)
-    useEffect(() => {
-        if (name in coffees) {
-            console.log('coffee with this name already exists');
-        }
-    }, [name])
+	}, [name, description, image, url]);
 
-    // gettings coffees name for comparsion
+	// checking if coffee name is unique (in this workspace)
+	useEffect(() => {
+		if (coffees.includes(name)) {
+			console.log("coffee with this name already exists");
+		}
+	}, [name]);
+
+	// gettings coffees name for comparsion
 	useEffect(() => {
 		axios
 			.get("http://localhost:3001/coffees/names", {
 				params: { user_id: id, workspace_id },
 			})
 			.then((res) => {
-				setCoffees(res.data.coffees);
+				console.log(res.data.coffees);
+				setCoffees(res.data.coffees ? res.data.coffees : []);
 			});
-    }, []);
+	}, []);
 
 	return (
 		<Box
@@ -72,7 +74,7 @@ const CreateCoffee = ({ create, id, workspace_id }) => {
 					placeholder="Name"
 					value={name}
 					onChange={(e) => setName(e.target.value)}
-					autofocus
+					autoFocus
 					required
 				/>
 				<TextField
@@ -83,7 +85,7 @@ const CreateCoffee = ({ create, id, workspace_id }) => {
 				/>
 				<TextField
 					placeholder="Image url"
-					value={url}
+					value={image}
 					onChange={(e) => setImage(e.target.value)}
 					required
 				/>
@@ -111,3 +113,5 @@ const CreateCoffee = ({ create, id, workspace_id }) => {
 		</Box>
 	);
 };
+
+export default CreateCoffee;
