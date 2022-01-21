@@ -1,5 +1,6 @@
 //nextjs, react
 import Link from "next/link";
+import { useRouter } from 'next/router';
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 //components
@@ -9,11 +10,13 @@ import AddIcon from "@mui/icons-material/Add";
 
 function AddRatingButton() {
 	const { status } = useSession();
+	const router = useRouter();
+	const workspace_id = router.query.id;
 	const [alert, setAlert] = useState(false);
 	if (status === "authenticated") {
 		return (
 			<Box sx={{ position: "fixed", right: 50, bottom: 50 }}>
-				<Link href="/create-coffee">
+				<Link href={`/workspaces/${workspace_id}/create-coffee`}>
 					<Fab color="primary" aria-label="create">
 						<AddIcon />
 					</Fab>
