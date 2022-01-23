@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 // components
 import CreateCoffee from '../../../components/coffees/CreateCoffee';
 // mui
-import { Box, Typography, Stack, CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 
 const createCoffee = () => {
     const router = useRouter();
