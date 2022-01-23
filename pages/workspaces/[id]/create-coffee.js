@@ -11,7 +11,7 @@ import { Box, Typography, Stack, CircularProgress } from '@mui/material';
 
 const createCoffee = () => {
     const router = useRouter();
-    const workspace_id = router.query.id;
+    const workspaceId = router.query.id;
     const { data: session, status } = useSession();
     const [isProtected, setProtected] = useState(false);
 
@@ -35,11 +35,10 @@ const createCoffee = () => {
             router.push('/');
         }
         if (status === "authenticated") {
-            if (!(parseInt(router.query.id, 10) in session.workspaces)) {
+            if (!session.workspaces.includes(workspaceId)) {
                 router.push('/');
             }
         }
-        console.log(status);
     }, [status])
 
     if (status === "loading") {
@@ -52,7 +51,7 @@ const createCoffee = () => {
     if (status === "authenticated") {
         return (
             <Box sx={{ display: 'flex' }}>
-                <CreateCoffee create={create} id={session.id} workspace_id={workspace_id}/>
+                <CreateCoffee create={create} id={session.id} workspaceId={workspaceId}/>
             </Box>
         )
     }
