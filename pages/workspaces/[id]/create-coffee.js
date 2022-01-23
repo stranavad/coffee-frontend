@@ -51,7 +51,7 @@ const createCoffee = () => {
     if (status === "authenticated") {
         return (
             <Box sx={{ display: 'flex' }}>
-                <CreateCoffee create={create} id={session.id} workspaceId={workspaceId}/>
+                <CreateCoffee create={create} userId={session.id} workspaceId={workspaceId}/>
             </Box>
         )
     }
