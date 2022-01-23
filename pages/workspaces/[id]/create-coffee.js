@@ -42,6 +42,13 @@ const createCoffee = () => {
     
     // edit key
     const submitEditKey = (editKey) => {
+        axios.post("http://localhost:3001/workspaces/protected", { user_id: session.id, workspace_id, edit_key: editKey }).then((res) => {
+            setAuthorized(res.data.verified);
+            if (!res.data.verified) {
+                console.log('workspace is not verified');
+                
+            }
+        })
         console.log('submit edit key', editKey);
     }
 
@@ -61,7 +68,8 @@ const createCoffee = () => {
 						user_id: session.id,
 					},
 				})
-				.then((res) => {
+                .then((res) => {
+                    console.log(res.data);
 					setProtected(res.data.protected);
 					setLoaded(true);
 				});
