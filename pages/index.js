@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Box, CircularProgress, Typography } from "@mui/material";
 
 export default function Home() {
-	const { data: session, status } = useSession();
+	const {status } = useSession();
 
 	// user is logged in
 	if (status === "authenticated") {
