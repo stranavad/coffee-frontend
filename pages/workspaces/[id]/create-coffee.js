@@ -17,7 +17,6 @@ const createCoffee = () => {
     const [isProtected, setProtected] = useState(false);
     const [authorized, setAuthorized] = useState(false);
 	const [loaded, setLoaded] = useState(false);
-	const [editKey, setEditKey] = useState("");
 
 	const create = (name, description, image, url) => {
 		console.log({ name, description, image, url });
@@ -27,12 +26,13 @@ const createCoffee = () => {
 				description,
 				image,
 				url,
-				user_id: session.id,
-				workspace_id,
+				userId: session.id,
+				workspaceId,
 			})
 			.then((res) => {
+				console.log(res);
 				if (res.data.message === "coffee created") {
-					router.push(`/workspaces/${workspace_id}`);
+					router.push(`/workspaces/${workspaceId}`);
 				} else {
 					console.log("there was an error");
 					// render alert box
@@ -42,14 +42,12 @@ const createCoffee = () => {
     
     // edit key
     const submitEditKey = (editKey) => {
-        axios.post("http://localhost:3001/workspaces/protected", { userId: session.id, workspaceId, editKey: editKey }).then((res) => {
+        axios.post("http://localhost:3001/workspaces/protected", { userId: session.id, workspaceId, editKey }).then((res) => {
             setAuthorized(res.data.verified);
             if (!res.data.verified) {
                 console.log('workspace is not verified');
-                
             }
         })
-        console.log('submit edit key', editKey);
     }
 
 	// authentication and data fetching
@@ -58,14 +56,14 @@ const createCoffee = () => {
 			router.push("/");
 		}
 		if (status === "authenticated") {
-			if (!(workspace_id in session.workspaces)) {
+			if (!session.workspaces.includes(workspaceId)) {
 				router.push("/");
 			}
 			axios
 				.get("http://localhost:3001/workspaces/protected", {
 					params: {
-						workspace_id: parseInt(workspace_id),
-						user_id: session.id,
+						workspaceId,
+						userId: session.id,
 					},
 				})
                 .then((res) => {
@@ -74,7 +72,6 @@ const createCoffee = () => {
 					setLoaded(true);
 				});
 		}
-		console.log(status);
 	}, [status]);
 
 	if (status === "loading") {
@@ -97,8 +94,8 @@ const createCoffee = () => {
 				<Box sx={{ display: "flex" }}>
 					<CreateCoffee
 						create={create}
-						id={session.id}
-						workspace_id={workspace_id}
+						userId={session.id}
+						workspaceId={workspaceId}
 					/>
 				</Box>
 			);

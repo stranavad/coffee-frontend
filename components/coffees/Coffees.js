@@ -1,10 +1,12 @@
-import React from "react";
-import { Grid, Typography, Button } from "@mui/material";
+import { useRouter } from 'next/router';
+
+import { Grid, Typography } from "@mui/material";
 import CoffeeCard from "./CoffeeCard";
 import CoffeesContext from "../context/CoffeesContext";
 
-function Coffees(props) {
-	//const router = useRouter();
+function Coffees() {
+	const router = useRouter();
+	const workspaceId = parseInt(router.query.id, 10);
 	return (
 		<CoffeesContext.Consumer>
 			{({ coffees }) => (
@@ -13,7 +15,7 @@ function Coffees(props) {
 						<Grid container spacing={4} sx={{ paddingTop: 3 }}>
 							{coffees.map((coffee) => (
 								<Grid item sm={6} key={coffee.id}>
-									<CoffeeCard coffee={coffee} />
+									<CoffeeCard coffee={coffee} workspaceId={workspaceId}/>
 								</Grid>
 							))}
 						</Grid>

@@ -24,7 +24,7 @@ const MyImage = React.forwardRef(({ coffee }, ref) => {
 	);
 });
 
-function CoffeeCard({ coffee }) {
+function CoffeeCard({ coffee, workspaceId }) {
 	return (
 		<Card
 			sx={{
@@ -57,7 +57,7 @@ function CoffeeCard({ coffee }) {
 				}}
 			>
 				<CardActionArea sx={{ width: "100%", height: "80%" }}>
-					<Link href={`/coffee/${coffee.id}`}>
+					<Link href={`/workspaces/${workspaceId}/coffee/${coffee.id}`}>
 						<CardContent>
 							<Typography
 								gutterBottom

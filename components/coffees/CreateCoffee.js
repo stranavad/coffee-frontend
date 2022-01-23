@@ -30,6 +30,12 @@ const CreateCoffee = ({ create, userId, workspaceId }) => {
 		}
 	}, [name, description, image, url]);
 
+	const fillData = () => {
+		setDescription('desc');
+		setImage('image.image');
+		setUrl('url.url');
+	}
+
 	// checking if coffee name is unique (in this workspace)
 	useEffect(() => {
 		if (coffees.includes(name)) {
@@ -70,6 +76,7 @@ const CreateCoffee = ({ create, userId, workspaceId }) => {
 				<Typography variant="h5" component="div">
 					Add Workspace
 				</Typography>
+				<Button onClick={fillData}>Fill data</Button>
 				<TextField
 					placeholder="Name"
 					value={name}
