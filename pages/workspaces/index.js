@@ -17,7 +17,7 @@ export default function Home() {
 		if (status === "authenticated") {
 			axios
 				.get(`http://localhost:3001/user/workspace`, {
-					params: { user_id: session.id },
+					params: { userId: session.id },
 				})
 				.then((res) => {
 					setWorkspaces(res.data.workspaces);
