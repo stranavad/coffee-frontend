@@ -23,15 +23,15 @@ const workspaces = () => {
 	const [coffees, setCoffees] = useState([]);
 	const [currentCoffee, setCurrentCoffee] = useState({});
 
-	const workspace_id = parseInt(router.query.id, 10);
+	const workspaceId = parseInt(router.query.id, 10);
 
 	// user logging and getting neccessary data
 	useEffect(() => {
 		if (status === "authenticated") {
-			if (session.workspaces.includes(workspace_id)) {
+			if (session.workspaces.includes(workspaceId)) {
 				axios
 					.get("http://localhost:3001/coffees", {
-						params: { user_id: session.id, workspace_id },
+						params: { userId: session.id, workspaceId },
 					})
 					.then((res) => {
 						setCoffees(res.data.coffees);
@@ -72,14 +72,14 @@ const workspaces = () => {
 	// user is authemticated, but not in this workspace
 	if (
 		status === "authenticated" &&
-		!session.workspaces.includes(workspace_id)
+		!session.workspaces.includes(workspaceId)
 	) {
 		return (
 			<Box>
 				<Typography>
 					You have to first
 					<Link
-						href={{ pathname: "/login", query: { workspace_id } }}
+						href={{ pathname: "/login", query: { workspaceId } }}
 					>
 						{" "}
 						log in{" "}
