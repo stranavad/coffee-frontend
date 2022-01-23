@@ -28,6 +28,7 @@ const workspaces = () => {
 	// user logging and getting neccessary data
 	useEffect(() => {
 		if (status === "authenticated") {
+			console.log(session);
 			if (session.workspaces.includes(workspaceId)) {
 				axios
 					.get("http://localhost:3001/coffees", {
@@ -71,7 +72,7 @@ const workspaces = () => {
 
 	// user is authemticated, but not in this workspace
 	if (
-		status === "authenticated" &&
+		 status === "authenticated" &&
 		!session.workspaces.includes(workspaceId)
 	) {
 		return (
@@ -81,8 +82,7 @@ const workspaces = () => {
 					<Link
 						href={{ pathname: "/login", query: { workspaceId } }}
 					>
-						{" "}
-						log in{" "}
+						log in
 					</Link>{" "}
 					to use this workspace
 				</Typography>

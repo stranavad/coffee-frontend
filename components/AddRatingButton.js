@@ -11,7 +11,7 @@ import AddIcon from "@mui/icons-material/Add";
 function AddRatingButton() {
 	const { status } = useSession();
 	const router = useRouter();
-	const workspaceid = router.query.id;
+	const workspaceId = router.query.id;
 	const [alert, setAlert] = useState(false);
 	if (status === "authenticated") {
 		return (

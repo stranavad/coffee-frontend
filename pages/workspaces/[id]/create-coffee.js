@@ -11,7 +11,7 @@ import { Box, CircularProgress } from '@mui/material';
 
 const createCoffee = () => {
     const router = useRouter();
-    const workspaceId = router.query.id;
+    const workspaceId = parseInt(router.query.id, 10);
     const { data: session, status } = useSession();
     const [isProtected, setProtected] = useState(false);
 
