@@ -1,10 +1,6 @@
 //next js stuff
-import { useRouter } from "next/router";
 import Link from "next/link";
 
-// modules
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 
 import CoffeesContext from "../../../../components/context/CoffeesContext";
@@ -17,9 +13,6 @@ import { Box, CircularProgress } from "@mui/material";
 
 const coffee = () => {
 	const { data: session, status } = useSession();
-	const router = useRouter();
-	
-
 	// SSG fast return 
 	if (status === "loading") {
 		return (
@@ -38,11 +31,12 @@ const coffee = () => {
 			<Box>
 				<Typography>
 					You have to first
-					<Link
-						href={{ pathname: "/login", query: { workspace_id } }}
+					{/* <Link
+						href={{ pathname: "/add", query: { workspaceId } }}
 					>
 						log in
-					</Link>
+					</Link> */}
+					login
 					to use this workspace
 				</Typography>
 			</Box>
