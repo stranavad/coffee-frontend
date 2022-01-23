@@ -12,7 +12,8 @@ import { Box, Typography, Stack, CircularProgress } from "@mui/material";
 
 const createCoffee = () => {
 	const router = useRouter();
-	const workspace_id = router.query.id;
+    const workspace_id = router.query.id;
+    const workspaceId = router.query.id;
 	const { data: session, status } = useSession();
     const [isProtected, setProtected] = useState(false);
     const [authorized, setAuthorized] = useState(false);
@@ -42,7 +43,7 @@ const createCoffee = () => {
     
     // edit key
     const submitEditKey = (editKey) => {
-        axios.post("http://localhost:3001/workspaces/protected", { user_id: session.id, workspace_id, edit_key: editKey }).then((res) => {
+        axios.post("http://localhost:3001/workspaces/protected", { userId: session.id, workspaceId, editKey: editKey }).then((res) => {
             setAuthorized(res.data.verified);
             if (!res.data.verified) {
                 console.log('workspace is not verified');
