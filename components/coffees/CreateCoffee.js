@@ -7,7 +7,7 @@ import axios from "axios";
 // mui
 import { Box, Stack, TextField, Button, Typography } from "@mui/material";
 
-const CreateCoffee = ({ create, id, workspace_id }) => {
+const CreateCoffee = ({ create, userId, workspaceId }) => {
 	const [name, setName] = useState("");
 	const [description, setDescription] = useState("");
 	const [image, setImage] = useState("");
@@ -30,6 +30,12 @@ const CreateCoffee = ({ create, id, workspace_id }) => {
 		}
 	}, [name, description, image, url]);
 
+	const fillData = () => {
+		setDescription('desc');
+		setImage('image.image');
+		setUrl('url.url');
+	}
+
 	// checking if coffee name is unique (in this workspace)
 	useEffect(() => {
 		if (coffees.includes(name)) {
@@ -41,7 +47,7 @@ const CreateCoffee = ({ create, id, workspace_id }) => {
 	useEffect(() => {
 		axios
 			.get("http://localhost:3001/coffees/names", {
-				params: { user_id: id, workspace_id },
+				params: { userId, workspaceId },
 			})
 			.then((res) => {
 				console.log(res.data.coffees);
@@ -70,6 +76,7 @@ const CreateCoffee = ({ create, id, workspace_id }) => {
 				<Typography variant="h5" component="div">
 					Add Workspace
 				</Typography>
+				<Button onClick={fillData}>Fill data</Button>
 				<TextField
 					placeholder="Name"
 					value={name}

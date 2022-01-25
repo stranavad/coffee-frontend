@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 // modules
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 // components
@@ -11,7 +11,6 @@ import CoffeesContext from "../../../components/context/CoffeesContext";
 import Coffees from "../../../components/coffees/Coffees";
 import CurrentCoffee from "../../../components/coffees/CurrentCoffee";
 import AddRatingButton from "../../../components/AddRatingButton";
-
 
 // mui
 import { Box, CircularProgress, Typography, Stack } from "@mui/material";
@@ -23,15 +22,16 @@ const workspaces = () => {
 	const [coffees, setCoffees] = useState([]);
 	const [currentCoffee, setCurrentCoffee] = useState({});
 
-	const workspace_id = parseInt(router.query.id, 10);
+	const workspaceId = parseInt(router.query.id, 10);
 
 	// user logging and getting neccessary data
 	useEffect(() => {
 		if (status === "authenticated") {
-			if (session.workspaces.includes(workspace_id)) {
+			console.log(session);
+			if (session.workspaces.includes(workspaceId)) {
 				axios
 					.get("http://localhost:3001/coffees", {
-						params: { user_id: session.id, workspace_id },
+						params: { userId: session.id, workspaceId },
 					})
 					.then((res) => {
 						setCoffees(res.data.coffees);
@@ -72,17 +72,14 @@ const workspaces = () => {
 	// user is authemticated, but not in this workspace
 	if (
 		status === "authenticated" &&
-		!session.workspaces.includes(workspace_id)
+		!session.workspaces.includes(workspaceId)
 	) {
 		return (
 			<Box>
 				<Typography>
 					You have to first
-					<Link
-						href={{ pathname: "/login", query: { workspace_id } }}
-					>
-						{" "}
-						log in{" "}
+					<Link href={{ pathname: "/login", query: { workspaceId } }}>
+						log in
 					</Link>{" "}
 					to use this workspace
 				</Typography>
@@ -94,16 +91,31 @@ const workspaces = () => {
 	return (
 		<CoffeesContext.Provider value={contextObject}>
 			<Stack alignItems="left" sx={{ maxWidth: "lg" }}>
-				<CurrentCoffee />
-				<Typography
-					variant="h4"
-					component="div"
-					sx={{ marginTop: "50px" }}
-					color="text.white"
-				>
-					Dalsi kavicky
-				</Typography>
-				<Coffees />
+				{currentCoffee.entries > 0 && <CurrentCoffee />}
+				{typeof(coffees) !== "undefined" ? (
+					<>
+						<Typography
+							variant="h4"
+							component="div"
+							sx={{ marginTop: "50px" }}
+							color="text.white"
+						>
+							Dalsi kavicky
+						</Typography>
+						<Coffees />
+					</>
+				) : (
+					<>
+						<Typography
+							variant="h4"
+							component="div"
+							sx={{ marginTop: "50px" }}
+							color="text.white"
+						>
+							There are no coffees yet
+						</Typography>
+					</>
+				)}
 				<AddRatingButton />
 			</Stack>
 		</CoffeesContext.Provider>

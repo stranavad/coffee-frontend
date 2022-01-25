@@ -2,12 +2,13 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 //components
+import AddCreateButton from '../components/workspace/AddCreateButton';
 
 // material ui
 import { Box, CircularProgress, Typography } from "@mui/material";
 
 export default function Home() {
-	const { data: session, status } = useSession();
+	const {status } = useSession();
 
 	// user is logged in
 	if (status === "authenticated") {
@@ -15,6 +16,7 @@ export default function Home() {
 			<Box sx={{ display: "flex", flexDirection: "column" }}>
 				<Box>
 					<Typography>Check out your <Link href="/workspaces">Workspaces</Link></Typography>
+					<AddCreateButton/>
 				</Box>
 			</Box>
 		);

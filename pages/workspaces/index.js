@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import axios from "axios";
 //components
@@ -13,11 +13,10 @@ export default function Home() {
 	const [workspaces, setWorkspaces] = useState([]);
 	//useEffect(() => console.log(status), [status])
 	useEffect(() => {
-		console.log(status);
 		if (status === "authenticated") {
 			axios
 				.get(`http://localhost:3001/user/workspace`, {
-					params: { user_id: session.id },
+					params: { userId: session.id },
 				})
 				.then((res) => {
 					setWorkspaces(res.data.workspaces);

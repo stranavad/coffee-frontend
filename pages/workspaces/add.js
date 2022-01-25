@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import Link from "next/link";
 import axios from "axios";
 //components
-import AddWorkspace from "../components/workspace/AddWorkspace";
+import AddWorkspace from "../../components/workspace/AddWorkspace";
 //mui
 import { Box, CircularProgress } from "@mui/material";
 
@@ -28,7 +28,7 @@ const addWorkspace = () => {
                 .then(({ data }) => {
                     console.log(data.message);
                     
-					if (data.message === "ok") {
+					if (data.message === "User added to workspace") {
 						console.log("workspace added");
 						router.push(`/workspace/${id}`);
 					} else {

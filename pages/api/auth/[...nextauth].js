@@ -14,7 +14,7 @@ export default NextAuth({
 			session.id = token.sub;
 			const { data: {workspaces} } = await axios.get(
 				"http://localhost:3001/user/workspace",
-				{ params: { user_id: session.id } }
+				{ params: { userId: session.id } }
 			);
 			console.log(workspaces);
 			session.workspaces = workspaces?.map((workspace) => workspace.id);

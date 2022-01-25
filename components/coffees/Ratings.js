@@ -26,7 +26,7 @@ function Ratings({ ratings }) {
 							justifyContent: "space-between",
 							marginBottom: 1,
 						}}
-						key={rating.user_id}
+						key={rating.userId}
 					>
 						<Box>
 							<Typography variant="h5" component="div">
@@ -37,7 +37,7 @@ function Ratings({ ratings }) {
 							</Typography>
 						</Box>
 						<Box sx={{ display: "flex" }}>
-							{session?.id === rating.user_id ? (
+							{session?.id === rating.userId ? (
 								<Button
 									variant="text"
 									onClick={() => {
