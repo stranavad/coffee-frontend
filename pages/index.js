@@ -1,11 +1,11 @@
 //nextjs, react stuff
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import Link from "next/link";
 //components
 import AddCreateButton from "../components/workspace/AddCreateButton";
 
 // material ui
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
 export default function Home() {
 	const { status } = useSession();
@@ -32,9 +32,15 @@ export default function Home() {
 	// some weird case
 	return (
 		<Box sx={{ display: "flex", flexDirection: 'column' }}>
-			<Typography variant="h3" sx={{marginBottom: 2}}>
+			<Typography variant="h4" sx={{marginBottom: 2}}>
 				Welcome to Coffee
 			</Typography>
+			{status === "unauthenticated" && (
+				<>
+					<Typography>You have to first</Typography>
+					<Button onClick={signIn}>Sign in</Button>
+				</>
+			)}
 			{status === "authenticated" && (
 				<>
 					<Typography variant="h6"><Link href="/workspaces">Check out your workspaces</Link></Typography>
