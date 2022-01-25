@@ -8,7 +8,7 @@ const AddCreateButton = () => {
 
 	if (status === "authenticated") {
 		return (
-			<Stack direction="row" spacing={2}>
+			<Stack direction="row" spacing={2} sx={{border: '1px solid gray', marginTop: 5, padding: 1, borderRadius: 4}}>
 				<Button href="/workspaces/add">
 					Add workspace
 				</Button>
