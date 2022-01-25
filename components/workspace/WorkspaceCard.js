@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 
 const WorkspaceCard = ({ workspace, leaveWorkspace }) => {
+	console.log(workspace);
 	return (
 		<Card sx={{ width: 250 }}>
 			<CardContent>
@@ -27,6 +28,7 @@ const WorkspaceCard = ({ workspace, leaveWorkspace }) => {
 				</Button>
 				<Button onClick={() => leaveWorkspace(workspace.id)} sx={{ color: "red" }}>Leave workspace</Button>
 			</CardActions>
+			<Typography>Creator: {workspace.creatorName}</Typography>
 		</Card>
 	);
 };
