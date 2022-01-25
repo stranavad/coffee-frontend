@@ -6,4 +6,4 @@ Only client side hydrating, with statis site skeleton returns
 
 run:
 npm install
-npm run dev
+npm run dev with backend npm run dev at :3001
