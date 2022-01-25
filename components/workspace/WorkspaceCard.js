@@ -12,19 +12,20 @@ import {
 	CardContent,
 } from "@mui/material";
 
-const WorkspaceCard = ({ workspace }) => {
+const WorkspaceCard = ({ workspace, leaveWorkspace }) => {
 	return (
 		<Card sx={{ width: 250 }}>
 			<CardContent>
 				<Typography>{workspace.name}</Typography>
 				<Typography>workspace users BACKLOG</Typography>
 			</CardContent>
-			<CardActions>
+			<CardActions sx={{ display: "flex", flexDirection: "column" }}>
 				<Button>
 					<Link href={`/workspaces/${workspace.id}`}>
 						Go to workspace
 					</Link>
 				</Button>
+				<Button onClick={() => leaveWorkspace(workspace.id)} sx={{ color: "red" }}>Leave workspace</Button>
 			</CardActions>
 		</Card>
 	);
