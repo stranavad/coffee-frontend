@@ -12,7 +12,6 @@ import Coffees from "../../../components/coffees/Coffees";
 import CurrentCoffee from "../../../components/coffees/CurrentCoffee";
 import AddRatingButton from "../../../components/AddRatingButton";
 
-
 // mui
 import { Box, CircularProgress, Typography, Stack } from "@mui/material";
 
@@ -72,16 +71,14 @@ const workspaces = () => {
 
 	// user is authemticated, but not in this workspace
 	if (
-		 status === "authenticated" &&
+		status === "authenticated" &&
 		!session.workspaces.includes(workspaceId)
 	) {
 		return (
 			<Box>
 				<Typography>
 					You have to first
-					<Link
-						href={{ pathname: "/login", query: { workspaceId } }}
-					>
+					<Link href={{ pathname: "/login", query: { workspaceId } }}>
 						log in
 					</Link>{" "}
 					to use this workspace
@@ -94,16 +91,31 @@ const workspaces = () => {
 	return (
 		<CoffeesContext.Provider value={contextObject}>
 			<Stack alignItems="left" sx={{ maxWidth: "lg" }}>
-				<CurrentCoffee />
-				<Typography
-					variant="h4"
-					component="div"
-					sx={{ marginTop: "50px" }}
-					color="text.white"
-				>
-					Dalsi kavicky
-				</Typography>
-				<Coffees />
+				{currentCoffee.entries > 0 && <CurrentCoffee />}
+				{typeof(coffees) !== "undefined" ? (
+					<>
+						<Typography
+							variant="h4"
+							component="div"
+							sx={{ marginTop: "50px" }}
+							color="text.white"
+						>
+							Dalsi kavicky
+						</Typography>
+						<Coffees />
+					</>
+				) : (
+					<>
+						<Typography
+							variant="h4"
+							component="div"
+							sx={{ marginTop: "50px" }}
+							color="text.white"
+						>
+							There are no coffees yet
+						</Typography>
+					</>
+				)}
 				<AddRatingButton />
 			</Stack>
 		</CoffeesContext.Provider>
