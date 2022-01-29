@@ -17,7 +17,7 @@ const Coffee = ({ coffee }) => {
 				width="400"
 				height="400"
 				// loader={imageLoader}
-				src={coffee.image}
+				src="https://image.image"
 				alt={coffee.name}
 				unoptimized
 			/>
@@ -52,7 +52,9 @@ const Coffee = ({ coffee }) => {
 					</Typography>
 				</CardContent>
 				<Options coffee={coffee} />
-				<Ratings ratings={coffee?.ratings} />
+				{coffee?.ratings?.length > 0 && (
+					<Ratings ratings={coffee?.ratings} />
+				)}
 			</Box>
 		</Card>
 	);
