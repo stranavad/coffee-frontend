@@ -1,18 +1,18 @@
 //next js stuff
-import { useEffect } from 'react';
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 import { useSession } from "next-auth/react";
 
-import CoffeesContext from '../../../../../components/context/CoffeesContext';
+import CoffeesContext from "../../../../../components/context/CoffeesContext";
 
 //components
 import Coffee from "../../../../../components/coffees/Coffee";
 
 // mui
 import { Box, CircularProgress } from "@mui/material";
-import axios from 'axios';
+import axios from "axios";
 
 const coffee = () => {
 	const { data: session, status } = useSession();
@@ -23,23 +23,30 @@ const coffee = () => {
 	const [coffee, setCoffee] = useState({});
 
 	useEffect(() => {
-		if (status === "authenticated" && session.workspaces.includes(workspaceId)) {
-			axios.get('http://localhost:3001/coffees/id', { params: { userId: session.id, workspaceId, coffeeId } }).then((res) => {
-				setCoffee(res.data?.coffee);
-				console.log(res.data.message);
-			})
+		if (
+			status === "authenticated" &&
+			session.workspaces.includes(workspaceId)
+		) {
+			axios
+				.get("http://localhost:3001/coffees/id", {
+					params: { userId: session.id, workspaceId, coffeeId },
+				})
+				.then((res) => {
+					setCoffee(res.data?.coffee);
+					console.log(res.data.message);
+				});
 		}
-		if (status === 'unauthenticated') {
+		if (status === "unauthenticated") {
 			router.push("/");
 		}
-	}, [status, session])
+	}, [status, session]);
 
 	const setCurrent = () => {
-		console.log('set current');
-	}
+		console.log("set current");
+	};
 	const deleteCoffee = () => {
-		console.log('delete coffee');
-	}
+		console.log("delete coffee");
+	};
 
 	// user is logged in, not in this workspace
 	if (
@@ -50,13 +57,10 @@ const coffee = () => {
 			<Box>
 				<Typography>
 					You have to first
-					<Link
-						href={{ pathname: "/add", query: { workspaceId } }}
-					>
+					<Link href={{ pathname: "/add", query: { workspaceId } }}>
 						log in
 					</Link>
-					login
-					to use this workspace
+					login to use this workspace
 				</Typography>
 			</Box>
 		);
@@ -68,7 +72,7 @@ const coffee = () => {
 			<CoffeesContext.Provider
 				value={{
 					coffee,
-					currentCoffee: { id: currentCoffeeId },
+					currentCoffee: { id: coffeeId },
 					setCurrent,
 					deleteCoffee,
 				}}
